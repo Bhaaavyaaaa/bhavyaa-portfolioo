@@ -1,0 +1,425 @@
+/* ==========================================================================
+   BHAVYA ARORA — Experience
+   An editorial career story, not a CV: hero portrait → skill journey on a
+   continuous rail → three roles → synthesis → statement → current focus.
+   No dates or durations anywhere on the page by design.
+   ========================================================================== */
+
+.ev-sec { padding-top: clamp(100px, 17vh, 190px); padding-bottom: clamp(90px, 15vh, 170px); }
+.ev-muted { color: var(--muted); }
+
+.ev-head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: clamp(28px, 5vh, 56px);
+  margin-bottom: clamp(48px, 9vh, 110px);
+}
+.ev-title {
+  grid-column: 1 / 13;
+  font-size: clamp(46px, 8.6vw, 164px);
+  font-weight: 600; line-height: 0.86; letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+.ev-title em { text-transform: none; letter-spacing: -0.03em; }
+.ev-lede {
+  grid-column: 5 / 13;
+  max-width: 30ch;
+  font-size: clamp(22px, 2.4vw, 40px);
+  font-weight: 500; line-height: 1.1; letter-spacing: -0.03em;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Hero — headline left, portrait right                                      */
+/* ------------------------------------------------------------------------ */
+
+.ev-hero {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: clamp(36px, 6vh, 64px);
+  align-items: end;
+  min-height: 100svh;
+  padding-top: calc(var(--nav-h) + clamp(40px, 8vh, 96px));
+  padding-bottom: clamp(40px, 7vh, 80px);
+}
+.ev-hero-text { grid-column: 1 / 8; display: grid; gap: clamp(28px, 5vh, 52px); align-content: end; }
+.ev-hero-title {
+  font-size: clamp(44px, 7.4vw, 142px);
+  font-weight: 600; line-height: 0.86; letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+.ev-hero-title em { text-transform: none; letter-spacing: -0.03em; }
+.ev-hero-copy { max-width: 46ch; font-size: clamp(17px, 1.35vw, 21px); line-height: 1.55; letter-spacing: -0.01em; }
+
+/* Portrait: black and white like every portrait on the site, revealed with
+   the same clip-path motion as the case-study covers. The source is
+   446 × 412, so it is never shown wider than that. */
+.ev-portrait { grid-column: 9 / 13; justify-self: end; width: 100%; max-width: 446px; }
+.ev-portrait-frame {
+  position: relative;
+  aspect-ratio: 446 / 412;
+  overflow: hidden;
+  background: var(--ink-2);
+  transition: clip-path 1.6s var(--ease);
+}
+.js .ev-portrait-frame { clip-path: inset(0 0 100% 0); }
+.js .ev-portrait-frame.is-in { clip-path: inset(0 0 0 0); }
+.ev-portrait-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.06);
+  transform: scale(1.04);
+  transition: transform 2.2s var(--ease-out), filter 0.8s var(--ease-out);
+}
+.ev-portrait-frame.is-in img { transform: none; }
+.ev-portrait figcaption { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; color: var(--muted); }
+
+/* Career path under the headline */
+.ev-path {
+  grid-column: 1 / 13;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+.ev-path li {
+  position: relative;
+  display: grid; gap: 10px;
+  padding: 16px var(--gap) 0 0;
+}
+.ev-path li + li { padding-left: var(--gap); border-left: 1px solid var(--line); }
+.ev-path li:not(:last-child)::after {
+  content: "→"; position: absolute; right: var(--gap); top: 14px;
+  font-weight: 300; font-size: clamp(18px, 1.6vw, 26px); line-height: 1;
+}
+.ev-path .mono { color: var(--muted); }
+.ev-path strong {
+  font-size: clamp(22px, 2.6vw, 48px);
+  font-weight: 600; line-height: 0.92; letter-spacing: -0.045em; text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Journey — chapters on one continuous rail                                 */
+/* ------------------------------------------------------------------------ */
+
+.ev-journey { position: relative; padding-top: clamp(40px, 8vh, 100px); padding-bottom: clamp(40px, 8vh, 100px); }
+.ev-journey--first { padding-top: 0; }
+.ev-journey--core { padding-top: clamp(90px, 15vh, 170px); padding-bottom: clamp(90px, 15vh, 170px); }
+
+/* The rail: a faint full-height line, and a fill that grows with scroll */
+.ev-rail {
+  position: absolute; top: 0; bottom: 0;
+  left: calc(var(--pad) + 5px);
+  width: 1px;
+  background: var(--line);
+  pointer-events: none;
+}
+.ev-rail span {
+  position: absolute; inset: 0;
+  background: var(--fg);
+  transform-origin: top;
+  transform: scaleY(var(--p, 0));
+  transition: background-color 0.9s var(--ease);
+}
+.ev-journey--first .ev-rail { top: clamp(40px, 8vh, 100px); }
+
+.ev-chapters { display: grid; }
+.ev-ch {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: 18px;
+  padding: clamp(40px, 7vh, 80px) 0 clamp(40px, 7vh, 80px) clamp(40px, 5vw, 90px);
+}
+/* Node on the rail */
+.ev-ch::before {
+  content: "";
+  position: absolute; left: 0; top: calc(clamp(40px, 7vh, 80px) + 0.35em);
+  width: 11px; height: 11px;
+  border: 1px solid var(--fg);
+  border-radius: 50%;
+  background: var(--bg);
+  transition: background-color 0.6s var(--ease-out), border-color 0.9s var(--ease);
+}
+.ev-ch.is-in::before { background: var(--fg); }
+
+.ev-ch-idx { grid-column: 1 / 3; color: var(--muted); padding-top: 0.6em; }
+.ev-ch-body { grid-column: 3 / 12; display: grid; gap: clamp(16px, 2.4vh, 24px); }
+.ev-ch-area { color: var(--muted); }
+.ev-ch-title {
+  font-size: clamp(38px, 6vw, 112px);
+  font-weight: 600; line-height: 0.88; letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+.ev-ch-sub {
+  max-width: 30ch;
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(22px, 2.3vw, 40px); line-height: 1.1; letter-spacing: -0.01em;
+}
+.ev-ch-copy { display: grid; gap: 0.9em; max-width: 58ch; }
+.ev-ch-copy p { font-size: clamp(17px, 1.3vw, 20px); line-height: 1.55; }
+.ev-keys { display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--muted); }
+.ev-keys li { position: relative; }
+.ev-keys li + li::before { content: "·"; position: absolute; left: -14px; }
+
+.js .ev-ch .ev-ch-body, .js .ev-ch .ev-ch-idx {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out);
+}
+.js .ev-ch.is-in .ev-ch-body, .js .ev-ch.is-in .ev-ch-idx { opacity: 1; transform: none; }
+
+/* Bridge line between chapters */
+.ev-bridge {
+  position: relative;
+  padding: 0 0 0 clamp(40px, 5vw, 90px);
+}
+.ev-bridge p {
+  margin-left: calc((100% + var(--gap)) / 12 * 2);
+  max-width: 34ch;
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(18px, 1.6vw, 26px); line-height: 1.2;
+  color: var(--muted);
+}
+
+/* Chapter 06 — the current core: dark, larger, keywords as a set */
+.ev-ch--core .ev-ch-title { font-size: clamp(44px, 8.4vw, 164px); }
+.ev-ch--core .ev-ch-sub { font-size: clamp(26px, 3vw, 54px); }
+.ev-core-tag { display: inline-flex; gap: 14px; align-items: center; }
+.ev-core-tag::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+.ev-keys--set { gap: 10px; margin-top: 8px; }
+.ev-keys--set li {
+  padding: 12px 18px;
+  border: 1px solid var(--line);
+  color: var(--fg);
+  font-size: 12px;
+  transition: border-color 0.5s var(--ease-out);
+}
+.ev-keys--set li + li::before { content: none; }
+@media (hover: hover) { .ev-keys--set li:hover { border-color: var(--fg); } }
+
+/* ------------------------------------------------------------------------ */
+/* Where the journey took me — three roles                                   */
+/* ------------------------------------------------------------------------ */
+
+.ev-roles { border-bottom: 1px solid var(--line); }
+.ev-role {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: 28px;
+  padding: clamp(40px, 7vh, 90px) 0;
+  border-top: 1px solid var(--line);
+}
+.ev-role-head { grid-column: 1 / 6; display: grid; gap: 16px; align-content: start; }
+.ev-role-step { display: flex; gap: 14px; color: var(--muted); }
+.ev-role-name {
+  font-size: clamp(40px, 5.6vw, 108px);
+  font-weight: 600; line-height: 0.86; letter-spacing: -0.055em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.ev-role-title { color: var(--muted); }
+.ev-role-body { grid-column: 7 / 13; display: grid; gap: clamp(18px, 3vh, 28px); align-content: start; }
+.ev-role-pos {
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(28px, 3.2vw, 58px); line-height: 1; letter-spacing: -0.015em;
+}
+.ev-role-copy { display: grid; gap: 0.9em; }
+.ev-role-copy p { font-size: clamp(17px, 1.3vw, 20px); line-height: 1.55; }
+.ev-role-label { color: var(--muted); margin-bottom: -8px; }
+.ev-brands { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: clamp(20px, 1.8vw, 30px); font-weight: 500; letter-spacing: -0.03em; }
+.ev-brands li + li::before { content: "·"; margin-right: 18px; color: var(--muted); font-weight: 400; }
+
+.js .ev-role { opacity: 0; transform: translateY(32px); transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out); }
+.js .ev-role.is-in { opacity: 1; transform: none; }
+
+/* Kyra proof points */
+.ev-proof {
+  grid-column: 1 / 13;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.ev-proof div { display: grid; gap: 12px; align-content: start; padding: 18px var(--gap) 4px; }
+.ev-proof div:first-child { padding-left: 0; }
+.ev-proof div + div { border-left: 1px solid var(--line); }
+.ev-proof dd {
+  order: -1;
+  font-size: clamp(38px, 4.2vw, 80px);
+  font-weight: 500; line-height: 0.9; letter-spacing: -0.06em;
+  font-variant-numeric: tabular-nums;
+}
+.ev-proof dd sup { font-size: 0.5em; vertical-align: 0.6em; line-height: 0; font-weight: 400; }
+.ev-proof dt { color: var(--muted); }
+
+/* ------------------------------------------------------------------------ */
+/* Every stage added something — staircase                                   */
+/* ------------------------------------------------------------------------ */
+
+.ev-evo {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: 48px;
+  align-items: start;
+}
+.ev-evo-intro { grid-column: 1 / 5; display: grid; gap: clamp(24px, 4vh, 40px); position: sticky; top: calc(var(--nav-h) + 40px); }
+.ev-evo-intro .ev-title { grid-column: auto; font-size: clamp(40px, 5vw, 96px); }
+.ev-evo-intro p:last-child { font-size: clamp(17px, 1.35vw, 21px); line-height: 1.55; max-width: 36ch; }
+.ev-stack { grid-column: 6 / 13; }
+.ev-stack li {
+  --step: calc(var(--i) * 1%);
+  display: flex; align-items: baseline; gap: 18px;
+  padding: clamp(10px, 1.4vw, 18px) 0 clamp(10px, 1.4vw, 18px) calc(var(--i) * 3.2%);
+  border-top: 1px solid var(--line);
+  font-size: clamp(30px, 4.4vw, 84px);
+  font-weight: 600; line-height: 0.92; letter-spacing: -0.05em; text-transform: uppercase;
+  color: var(--fg);
+  opacity: calc(0.34 + var(--i) * 0.094);
+}
+.ev-stack li:last-child { border-bottom: 1px solid var(--line); opacity: 1; }
+.ev-stack li .mono { font-weight: 400; letter-spacing: 0.08em; color: var(--muted); }
+.ev-stack li:last-child span:last-child { font-family: var(--f-serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -0.02em; }
+.js .ev-stack li { transform: translateX(-24px); transition: transform 1.2s var(--ease-out), opacity 1s var(--ease-out); }
+.js .ev-stack li:not(.is-in) { opacity: 0; }
+.js .ev-stack li.is-in { transform: none; }
+
+/* ------------------------------------------------------------------------ */
+/* Statement                                                                 */
+/* ------------------------------------------------------------------------ */
+
+.ev-statement {
+  display: grid; align-content: center; gap: clamp(28px, 6vh, 72px);
+  min-height: 100svh;
+  padding-top: clamp(100px, 16vh, 180px);
+  padding-bottom: clamp(100px, 16vh, 180px);
+}
+.ev-statement-a {
+  max-width: 16ch;
+  font-size: clamp(38px, 6.4vw, 124px);
+  font-weight: 600; line-height: 0.88; letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ev-statement-b {
+  justify-self: end; text-align: right;
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(56px, 11vw, 220px); line-height: 0.86; letter-spacing: -0.035em;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Current focus                                                             */
+/* ------------------------------------------------------------------------ */
+
+.ev-caps {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: 10px 0;
+  padding: clamp(20px, 3vh, 32px) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.ev-caps li {
+  font-size: clamp(22px, 2.6vw, 48px);
+  font-weight: 600; line-height: 1; letter-spacing: -0.045em; text-transform: uppercase;
+}
+.ev-caps li:first-child { color: var(--fg); }
+.ev-caps li + li::before {
+  content: "·"; margin: 0 0.45em;
+  font-weight: 300; color: var(--muted);
+}
+.ev-caps li:not(:first-child) { color: var(--muted); transition: color 0.5s var(--ease-out); }
+@media (hover: hover) { .ev-caps li:not(:first-child):hover { color: var(--fg); } }
+
+/* ------------------------------------------------------------------------ */
+/* Final line                                                                */
+/* ------------------------------------------------------------------------ */
+
+.ev-final { padding-top: clamp(100px, 17vh, 190px); padding-bottom: clamp(40px, 8vh, 100px); }
+.ev-final-text {
+  font-size: clamp(40px, 7vw, 136px);
+  font-weight: 600; line-height: 0.88; letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+.ev-final-text em { display: block; text-transform: none; letter-spacing: -0.03em; font-weight: 400; color: var(--muted); }
+
+/* ------------------------------------------------------------------------ */
+/* Responsive                                                                */
+/* ------------------------------------------------------------------------ */
+
+@media (max-width: 1024px) {
+  .ev-lede { grid-column: 3 / 13; }
+
+  .ev-hero-text { grid-column: 1 / 13; order: 2; }
+  .ev-portrait { grid-column: 1 / 13; justify-self: start; order: 1; max-width: min(446px, 60%); }
+  .ev-path { order: 3; }
+  .ev-hero { align-items: start; min-height: 0; }
+
+  .ev-ch-idx { grid-column: 1 / 13; padding-top: 0; }
+  .ev-ch-body { grid-column: 1 / 13; }
+  .ev-ch::before { top: calc(clamp(40px, 7vh, 80px) + 0.2em); }
+  .ev-bridge p { margin-left: 0; }
+
+  .ev-role-head, .ev-role-body { grid-column: 1 / 13; }
+  .ev-proof { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ev-proof div:nth-child(4) { padding-left: 0; border-left: 0; }
+  .ev-proof div:nth-child(n + 4) { border-top: 1px solid var(--line); margin-top: 14px; }
+
+  .ev-evo-intro { grid-column: 1 / 13; position: static; }
+  .ev-stack { grid-column: 1 / 13; }
+}
+
+@media (max-width: 760px) {
+  .ev-sec { padding-top: 88px; padding-bottom: 80px; }
+  .ev-head { margin-bottom: 40px; row-gap: 22px; }
+  .ev-title { font-size: clamp(40px, 12.4vw, 64px); }
+  .ev-lede { grid-column: 1 / 13; font-size: clamp(21px, 6vw, 26px); }
+
+  .ev-hero { padding-top: calc(var(--nav-h) + 28px); }
+  .ev-portrait { max-width: 100%; }
+  .ev-hero-title { font-size: clamp(38px, 11.6vw, 58px); }
+
+  .ev-path { grid-template-columns: minmax(0, 1fr); }
+  .ev-path li, .ev-path li + li { display: flex; gap: 16px; align-items: baseline; padding: 14px 0; border-left: 0; }
+  .ev-path li + li { border-top: 1px solid var(--line); }
+  .ev-path li:not(:last-child)::after { content: "↓"; right: auto; left: 50%; top: auto; bottom: -11px; font-size: 16px; background: var(--bg); padding: 0 6px; transform: translateX(-50%); transition: background-color 0.9s var(--ease); }
+  .ev-path strong { font-size: clamp(24px, 7.4vw, 32px); }
+
+  .ev-rail { left: calc(var(--pad) + 5px); }
+  .ev-ch { padding: 40px 0 40px 34px; row-gap: 12px; }
+  .ev-ch::before { top: 40px; }
+  .ev-bridge { padding-left: 34px; }
+  .ev-ch-title { font-size: clamp(34px, 10.4vw, 52px); }
+  .ev-ch--core .ev-ch-title { font-size: clamp(38px, 11.4vw, 58px); }
+  .ev-ch-sub { font-size: clamp(21px, 6vw, 26px); }
+  .ev-ch--core .ev-ch-sub { font-size: clamp(24px, 7vw, 30px); }
+  .ev-keys--set li { padding: 10px 12px; font-size: 11px; }
+
+  .ev-role-name { font-size: clamp(38px, 12vw, 60px); }
+  .ev-role-pos { font-size: clamp(26px, 7.6vw, 34px); }
+  .ev-proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ev-proof div:nth-child(n) { padding: 16px 10px 16px 12px; border-left: 1px solid var(--line); border-top: 1px solid var(--line); margin-top: 0; }
+  .ev-proof div:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .ev-proof div:first-child { grid-column: 1 / -1; border-top: 0; }
+  .ev-proof div:first-child ~ div:nth-child(even) { padding-left: 0; border-left: 0; }
+  .ev-proof div:first-child ~ div:nth-child(odd) { padding-left: 12px; border-left: 1px solid var(--line); }
+  .ev-proof dd { font-size: clamp(34px, 11vw, 48px); }
+
+  .ev-stack li { padding-left: calc(var(--i) * 12px); font-size: clamp(26px, 8.6vw, 38px); gap: 12px; }
+
+  .ev-statement { min-height: 86svh; }
+  .ev-statement-b { font-size: clamp(52px, 16vw, 80px); }
+
+  .ev-caps li { font-size: clamp(20px, 6.4vw, 28px); }
+
+  .ev-final-text { font-size: clamp(36px, 10.6vw, 56px); }
+}
+
+/* Client names that have a case study link to it — a quiet underline marks them */
+.ev-brands a, .ev-role-name a {
+  text-decoration: underline; text-decoration-thickness: 1px;
+  text-decoration-color: var(--line); text-underline-offset: 0.18em;
+  transition: text-decoration-color 0.4s var(--ease-out);
+}
+.ev-brands a:hover, .ev-role-name a:hover, .ev-brands a:focus-visible, .ev-role-name a:focus-visible { text-decoration-color: currentColor; }

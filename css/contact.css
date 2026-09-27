@@ -1,0 +1,102 @@
+/* ==========================================================================
+   BHAVYA ARORA — Contact
+   Clarity first: who to contact and how, then a short personal form.
+   Desktop: details left, form right on the 12-column grid. Mobile: stacked.
+   Only contact.html loads this file.
+   ========================================================================== */
+
+.ct {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: clamp(56px, 9vh, 96px);
+  align-items: start;
+  padding-top: calc(var(--nav-h) + clamp(48px, 10vh, 120px));
+  padding-bottom: clamp(80px, 13vh, 150px);
+}
+
+/* Left — heading, intro and the direct details */
+.ct-intro { grid-column: 1 / 6; display: grid; gap: clamp(28px, 4.4vh, 44px); }
+.ct-title {
+  font-size: clamp(52px, 7vw, 128px);
+  font-weight: 600; line-height: 0.86; letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+.ct-lede { max-width: 30ch; font-size: clamp(18px, 1.5vw, 24px); line-height: 1.4; letter-spacing: -0.015em; color: var(--muted); }
+.ct-lede em { display: block; margin-bottom: 4px; font-family: var(--f-serif); font-size: 1.35em; line-height: 1.1; color: var(--fg); }
+
+.ct-details { border-top: 1px solid var(--line); }
+.ct-row {
+  display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 16px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.ct-row dt { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.ct-row dd { font-size: clamp(17px, 1.35vw, 21px); letter-spacing: -0.015em; overflow-wrap: anywhere; }
+.ct-row a, .ct-direct a, .ct-status a {
+  text-decoration: underline; text-decoration-thickness: 1px;
+  text-decoration-color: var(--line); text-underline-offset: 0.22em;
+  transition: text-decoration-color 0.35s var(--ease-out);
+}
+.ct-row a:hover, .ct-direct a:hover, .ct-status a:hover { text-decoration-color: currentColor; }
+
+/* Right — the form, kept to a comfortable reading width */
+.ct-form {
+  grid-column: 7 / 13;
+  max-width: 620px; width: 100%;
+  justify-self: end;
+  display: grid; gap: 22px;
+  padding-top: clamp(8px, 1.5vw, 24px);
+}
+.ct-form-title { font-size: 11px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.ct-field { display: grid; gap: 8px; }
+.ct-field label { font-size: 13px; letter-spacing: 0.02em; color: var(--fg); }
+.ct-field input, .ct-field textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  font: inherit; font-size: 17px; line-height: 1.4; color: var(--fg);
+  background: rgba(238, 236, 231, 0.04);
+  border: 1px solid var(--stroke);
+  border-radius: 0;
+  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+}
+.ct-field textarea { min-height: 150px; resize: vertical; }
+.ct-field input:hover, .ct-field textarea:hover { border-color: var(--muted); }
+.ct-field input:focus, .ct-field textarea:focus { outline: none; border-color: var(--fg); background: rgba(238, 236, 231, 0.07); }
+.ct-field input:focus-visible, .ct-field textarea:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.ct-field [aria-invalid="true"] { border-color: #e4a39a; }
+
+.ct-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 6px; }
+.ct-submit {
+  display: inline-flex; align-items: center; gap: 12px;
+  min-height: 52px; padding: 0 26px;
+  background: var(--fg); color: var(--bg);
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+}
+.ct-submit i { font-style: normal; transition: transform 0.4s var(--ease); }
+.ct-submit:hover { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1px var(--fg); }
+.ct-submit:hover i { transform: translateX(4px); }
+.ct-note { flex: 1 1 200px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+.ct-status:empty { display: none; }
+.ct-status { font-size: 15px; line-height: 1.5; padding: 14px 16px; border-left: 2px solid var(--fg); background: rgba(238, 236, 231, 0.04); }
+.ct-direct { padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+.ct-direct a { color: var(--fg); }
+
+/* Small personal close */
+.ct-close { grid-column: 1 / 13; font-family: var(--f-serif); font-style: italic; font-size: clamp(22px, 2vw, 32px); color: var(--muted); }
+
+/* Tablet and below: stack in reading order — intro, details, form, close */
+@media (max-width: 1024px) {
+  .ct-intro { grid-column: 1 / 10; }
+  .ct-form { grid-column: 1 / 13; justify-self: start; max-width: 640px; }
+}
+@media (max-width: 760px) {
+  .ct { row-gap: 56px; padding-top: calc(var(--nav-h) + 80px); }
+  .ct-intro { grid-column: 1 / 13; }
+  .ct-title { font-size: clamp(48px, 15vw, 72px); }
+  .ct-row { grid-template-columns: 1fr; gap: 4px; }
+  .ct-submit { width: 100%; justify-content: center; }
+}

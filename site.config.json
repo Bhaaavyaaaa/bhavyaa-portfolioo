@@ -1,0 +1,8 @@
+{
+  "_readme": "The ONE place for production URLs. Set siteUrl to the live domain (no trailing slash), add verified profile links to sameAs, then run: node scripts/set-site-url.mjs — it rewrites canonicals, og:url/og:image, JSON-LD, sitemap.xml, robots.txt and llms.txt. cleanUrls: true publishes /about instead of /about.html (supported by Vercel with vercel.json, Netlify, Cloudflare Pages and GitHub Pages); set it to false for a host that cannot serve extensionless URLs.",
+  "siteUrl": "https://your-domain.tld",
+  "cleanUrls": true,
+  "sameAs": [
+    "https://www.linkedin.com/in/bhavya-arora018"
+  ]
+}

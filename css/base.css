@@ -1,0 +1,255 @@
+/* ==========================================================================
+   BHAVYA ARORA — Base
+   Tokens, reset, type, global layers (grain, cursor), grid, reveals, links.
+   Shared by every page. Editorial / black & white / typography-led.
+   ========================================================================== */
+
+:root {
+  --ink: #0c0c0c;
+  --paper: #eeece7;
+  --paper-2: #e4e1da;
+  --ink-2: #161616;
+
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --muted: rgba(12, 12, 12, 0.64);      /* ≥ 4.5:1 on paper for 11px mono */
+  --line: rgba(12, 12, 12, 0.16);
+  --stroke: rgba(12, 12, 12, 0.3);      /* outlined display type */
+  --panel: var(--paper-2);
+
+  --f-sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --f-serif: "Instrument Serif", "Times New Roman", serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --pad: clamp(16px, 3vw, 44px);
+  --gap: clamp(12px, 1.6vw, 24px);
+  --nav-h: 58px;
+  --ease: cubic-bezier(0.7, 0, 0.15, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark tokens: the page theme (body) or a locked-dark region (.theme-dark),
+   e.g. the hero, whose cut-out portrait needs a black ground at all times. */
+body[data-theme="dark"],
+.theme-dark {
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --muted: rgba(238, 236, 231, 0.6);
+  --line: rgba(238, 236, 231, 0.16);
+  --stroke: rgba(238, 236, 231, 0.26);
+  --panel: var(--ink-2);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+html.is-locked { overflow: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+  transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
+}
+
+/* Older engines without overflow: clip. Only body gets `hidden`: with html
+   left visible, body's overflow propagates to the viewport, so body does
+   not become a scroll container and position: sticky keeps working. */
+@supports not (overflow: clip) { body { overflow-x: hidden; } }
+
+img { display: block; max-width: 100%; }
+picture { display: contents; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+ul, ol { list-style: none; }
+em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+
+::selection { background: var(--fg); color: var(--bg); }
+
+.mono {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Accessibility: skip link + focus                                          */
+/* ------------------------------------------------------------------------ */
+
+.skip-link {
+  position: fixed;
+  top: 12px; left: var(--pad);
+  z-index: 100;
+  padding: 12px 16px;
+  background: var(--fg);
+  color: var(--bg);
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  transform: translateY(-200%);
+  transition: transform 0.4s var(--ease-out);
+}
+.skip-link:focus { transform: none; }
+
+:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+:focus:not(:focus-visible) { outline: none; }
+main:focus { outline: none; }
+
+/* ------------------------------------------------------------------------ */
+/* Global layers                                                             */
+/* ------------------------------------------------------------------------ */
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Custom cursor. Shown only when JS confirms a fine, hover-capable pointer
+   (html.has-cursor) — the same condition that hides the native cursor. */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 95;
+  width: 10px; height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  display: none;
+  align-items: center; justify-content: center;
+  transition: width 0.45s var(--ease-out), height 0.45s var(--ease-out), margin 0.45s var(--ease-out), background-color 0.3s, opacity 0.3s;
+}
+.cursor-label {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink); opacity: 0; transform: scale(0.6);
+  transition: opacity 0.3s, transform 0.45s var(--ease-out);
+}
+.cursor.is-view {
+  width: 96px; height: 96px; margin: -48px 0 0 -48px;
+  background: var(--paper); mix-blend-mode: normal;
+}
+.cursor.is-view .cursor-label { opacity: 1; transform: none; }
+.cursor.is-link { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
+.has-cursor .cursor { display: flex; }
+.has-cursor [data-cursor] { cursor: none; }
+
+/* ------------------------------------------------------------------------ */
+/* Grid, eyebrow                                                             */
+/* ------------------------------------------------------------------------ */
+
+section { position: relative; padding: 0 var(--pad); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+
+.eyebrow { display: inline-flex; align-items: baseline; gap: 14px; color: var(--fg); }
+.col-label { grid-column: 1 / 4; align-self: start; }
+
+.nowrap { white-space: nowrap; }
+
+/* ------------------------------------------------------------------------ */
+/* Reveals                                                                   */
+/* Hidden start states apply only under html.js, which the inline head
+   script sets and removes again if core.js has not started in time — so
+   content is never invisible when JavaScript is off, blocked or broken.   */
+/* ------------------------------------------------------------------------ */
+
+.line { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.line > span { display: inline-block; }
+.js .line > span {
+  transform: translate3d(0, 110%, 0);
+  transition: transform 1.25s var(--ease-out);
+}
+.js .is-in .line > span { transform: none; }
+.is-in .line:nth-child(2) > span { transition-delay: 0.09s; }
+.is-in .line:nth-child(3) > span { transition-delay: 0.18s; }
+
+.js .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out); }
+.js .fade-up.is-in { opacity: 1; transform: none; }
+.fade-up.is-in + .fade-up.is-in { transition-delay: 0.12s; }
+
+.js .reveal-el { opacity: 0; transition: opacity 1s var(--ease-out); }
+.js .reveal-el.is-in { opacity: 1; }
+
+.reveal-rule { display: block; height: 1px; background: var(--line); }
+.js .reveal-rule {
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 1.4s var(--ease);
+}
+.js .reveal-rule.is-in { transform: scaleX(1); }
+
+/* ------------------------------------------------------------------------ */
+/* Links                                                                     */
+/* ------------------------------------------------------------------------ */
+
+.link-arrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding-bottom: 6px;
+  position: relative;
+  white-space: nowrap;
+}
+.link-arrow::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: currentColor; transform-origin: right; transition: transform 0.6s var(--ease);
+}
+.link-arrow i { font-style: normal; display: inline-block; transition: transform 0.5s var(--ease); }
+@media (hover: hover) {
+  .link-arrow:hover::after { transform: scaleX(0); }
+  .link-arrow:hover i { transform: translateX(6px); }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Placeholder for content still to be supplied (never invented copy)        */
+/* ------------------------------------------------------------------------ */
+
+.tbd {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.tbd::before { content: ""; width: 6px; height: 6px; border: 1px solid currentColor; border-radius: 50%; flex-shrink: 0; }
+
+/* ------------------------------------------------------------------------ */
+/* Reduced motion                                                            */
+/* ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; transition-delay: 0s !important; animation: none !important; }
+}

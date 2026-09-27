@@ -1,0 +1,367 @@
+/* ==========================================================================
+   BHAVYA ARORA — About
+   One continuous personal story. The personal photographs live together in
+   ONE opening cluster with the name and intro; the sections after it are
+   text-led, with a single small accent photo and one small cluster of clips.
+   Only about.html loads this file.
+
+   Type scale on this page
+     L1  hero name, "the whole journey", final statement   (very large)
+     L2  section headings                                    (large)
+     L3  story steps, thought fragments, supporting lines    (medium)
+     L4  body copy                                           (16–22px)
+   ========================================================================== */
+
+.ab-hero, .ab-sec, .ab-final { overflow-x: clip; }
+
+.ab-sec { padding-top: clamp(88px, 13vh, 160px); padding-bottom: clamp(88px, 13vh, 160px); }
+
+/* Big uppercase lines break evenly instead of leaving a one-word orphan */
+.ab-hero-title .line > span, .ab-story-title .line > span, .ab-story-final .line > span,
+.ab-today-title .line > span, .ab-final-a .line > span, .ab-cs-b .line > span { text-wrap: balance; }
+.ab-hero-intro, .ab-story-copy p, .ab-frags li, .ab-today-body p { text-wrap: pretty; }
+
+/* Shared section heading (L2) */
+.ab-story-title, .ab-see-title, .ab-outside-title, .ab-today-title {
+  font-weight: 600; line-height: 0.88; letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+.ab-see-title em, .ab-today-title em, .ab-story-final em {
+  text-transform: none; font-family: var(--f-serif); font-weight: 400; letter-spacing: -0.03em;
+}
+
+/* ------------------------------------------------------------------------ */
+/* 1 — Opening: name + intro (left) and one personal photo cluster (right)   */
+/* ------------------------------------------------------------------------ */
+
+.ab-hero {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  align-items: center;
+  padding-top: calc(var(--nav-h) + clamp(32px, 6vh, 72px));
+  padding-bottom: clamp(32px, 5vh, 64px);
+}
+.ab-hero + .ab-sec { padding-top: clamp(64px, 10vh, 120px); }
+
+/* Left: a controlled headline with the intro directly beneath it */
+.ab-hero-lead { grid-column: 1 / 6; display: grid; gap: clamp(28px, 4.4vh, 48px); }
+.ab-hero-title {
+  font-size: clamp(72px, 9.4vw, 150px);
+  font-weight: 600; line-height: 0.84; letter-spacing: -0.065em;
+  text-transform: uppercase;
+}
+.ab-hero-text { display: grid; gap: clamp(18px, 3vh, 28px); }
+.ab-hero-id {
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(26px, 2.3vw, 38px); line-height: 1.06; letter-spacing: -0.015em;
+}
+.ab-hero-intro {
+  max-width: 34ch;
+  font-size: clamp(17px, 1.35vw, 21px); line-height: 1.5;
+  color: color-mix(in srgb, var(--fg) 76%, transparent);
+}
+
+/* Right: every personal photo as one composition — the main portrait anchors
+   it, the others sit around it as smaller fragments. Placed in % of the
+   cluster so the arrangement holds across desktop widths. No photo is
+   clipped: each shows its full frame (the thinking portrait is a deliberate
+   crop that removes the poster text above it). */
+.ab-cluster {
+  grid-column: 6 / 13;
+  position: relative;
+  aspect-ratio: 100 / 84;
+  width: 100%; max-width: 820px; justify-self: end;
+}
+.ab-c { position: absolute; margin: 0; box-shadow: 0 28px 56px -28px rgba(0, 0, 0, 0.75); }
+.ab-c img { display: block; width: 100%; height: auto; }
+.ab-c--main   { left: 20%; top: 3%;  width: 45%; z-index: 1; outline: 1px solid rgba(238, 236, 231, 0.08); }
+.ab-c--think  { left: 69%; top: 0;   width: 30%; z-index: 2; rotate: 2deg; aspect-ratio: 1122 / 880; overflow: hidden; }
+.ab-c--think img { height: 100%; object-fit: cover; object-position: 50% 100%; filter: grayscale(1); }
+.ab-c--laptop { left: 70%; top: 38%; width: 19%; z-index: 3; rotate: 1.5deg; }
+.ab-c--blazer { left: 0;   top: 55%; width: 27%; z-index: 3; rotate: -2.5deg; }
+
+.js .ab-c { opacity: 0; translate: 0 40px; transition: opacity 1.3s var(--ease-out), translate 1.5s var(--ease-out); }
+.js .ab-c--think  { transition-delay: 0.15s; }
+.js .ab-c--laptop { transition-delay: 0.3s; }
+.js .ab-c--blazer { transition-delay: 0.45s; }
+.js .ab-c.is-in { opacity: 1; translate: 0 0; }
+
+/* The two colour photos arrive in black and white like the rest of the
+   page, then warm into their own colour once on screen */
+.js .ab-warm img { filter: grayscale(1); transition: filter 1.8s var(--ease) 0.6s; }
+.js .ab-warm.is-in img { filter: none; }
+
+/* ------------------------------------------------------------------------ */
+/* 2 — The story                                                             */
+/* ------------------------------------------------------------------------ */
+
+.ab-story-title { font-size: clamp(38px, 5.4vw, 104px); }
+.ab-story-title .line:last-child > span { color: var(--muted); }
+
+/* A staircase: each step further along and a shade darker than the last */
+.ab-steps { margin-top: clamp(48px, 8vh, 96px); display: grid; gap: clamp(4px, 1vh, 12px); }
+.ab-steps li {
+  font-size: clamp(24px, 2.8vw, 52px);
+  font-weight: 500; line-height: 1.04; letter-spacing: -0.04em;
+  padding-left: calc(var(--i, 0) * 9%);
+  transition: color 0.9s var(--ease), opacity 1s var(--ease-out), transform 1.2s var(--ease-out);
+}
+.ab-steps li:nth-child(1) { --i: 0; color: color-mix(in srgb, var(--fg) 26%, transparent); }
+.ab-steps li:nth-child(2) { --i: 1; color: color-mix(in srgb, var(--fg) 40%, transparent); transition-delay: 0.08s; }
+.ab-steps li:nth-child(3) { --i: 2; color: color-mix(in srgb, var(--fg) 56%, transparent); transition-delay: 0.16s; }
+.ab-steps li:nth-child(4) { --i: 3; color: color-mix(in srgb, var(--fg) 74%, transparent); transition-delay: 0.24s; }
+.ab-steps li:nth-child(5) { --i: 4; color: var(--fg); transition-delay: 0.32s; }
+
+.ab-story-copy {
+  display: grid; gap: 1em;
+  max-width: 44ch;
+  margin: clamp(48px, 8vh, 96px) 8% 0 auto;
+}
+.ab-story-copy p { font-size: clamp(17px, 1.3vw, 21px); line-height: 1.5; }
+.ab-story-copy p + p { color: var(--muted); }
+
+/* L1 — the key story statement */
+.ab-story-final {
+  margin-top: clamp(80px, 14vh, 170px);
+  font-size: clamp(40px, 6.6vw, 128px);
+  font-weight: 600; line-height: 0.86; letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+.ab-story-final em { display: inline-block; padding-left: 0.6em; }
+
+/* ------------------------------------------------------------------------ */
+/* 3 — How I see things (typography only)                                   */
+/* ------------------------------------------------------------------------ */
+
+.ab-see {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  align-items: start;
+}
+.ab-see-title {
+  grid-column: 1 / 5;
+  position: sticky; top: calc(var(--nav-h) + 6vh);
+  font-size: clamp(36px, 4.2vw, 80px);
+}
+.ab-see-body { grid-column: 6 / 12; display: grid; gap: clamp(40px, 7vh, 80px); }
+.ab-frags { display: grid; gap: clamp(24px, 4.4vh, 48px); }
+.ab-frags li {
+  max-width: 26ch;
+  font-size: clamp(20px, 1.75vw, 32px);
+  font-weight: 500; line-height: 1.16; letter-spacing: -0.028em;
+}
+.ab-frags li:nth-child(even) { margin-left: 14%; }
+.ab-frags em, .ab-see-close em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; color: var(--muted); }
+.ab-see-close {
+  padding-top: clamp(20px, 3.4vh, 36px);
+  border-top: 1px solid var(--line);
+  font-size: clamp(22px, 2.2vw, 40px);
+  font-weight: 600; line-height: 1.04; letter-spacing: -0.04em;
+}
+
+/* ------------------------------------------------------------------------ */
+/* 4 — Computer science → marketing                                          */
+/* ------------------------------------------------------------------------ */
+
+.ab-cs {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: clamp(40px, 7vh, 80px);
+  align-items: center;
+}
+.ab-cs-a {
+  grid-column: 1 / 13; grid-row: 1;
+  font-size: clamp(14px, 1.05vw, 17px);
+  font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase;
+  color: var(--muted);
+}
+.ab-cs-b {
+  grid-column: 1 / 10; grid-row: 2;
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(46px, 7.2vw, 140px); line-height: 0.9; letter-spacing: -0.035em;
+}
+/* Small accent beside the line — it supports the joke, it is not a section */
+.ab-cs-photo {
+  grid-column: 10 / 12; grid-row: 2;
+  margin: 0; rotate: 2deg;
+  box-shadow: 0 30px 60px -32px rgba(0, 0, 0, 0.55);
+}
+.ab-cs-photo img { display: block; width: 100%; height: auto; }
+.js .ab-cs-photo { opacity: 0; translate: 0 40px; transition: opacity 1.2s var(--ease-out), translate 1.4s var(--ease-out); }
+.js .ab-cs-photo.is-in { opacity: 1; translate: 0 0; }
+
+/* ------------------------------------------------------------------------ */
+/* 5 — Outside the campaigns: one small cluster of four clips               */
+/* ------------------------------------------------------------------------ */
+
+.ab-outside-text {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: 20px 40px;
+  margin-bottom: clamp(40px, 7vh, 80px);
+}
+.ab-outside-title { font-size: clamp(36px, 4.6vw, 88px); }
+.ab-outside-sub {
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(20px, 1.9vw, 34px); line-height: 1.05; color: var(--muted);
+}
+
+/* Four clips at different sizes, never shown larger than their own pixels */
+.ab-gifs { position: relative; aspect-ratio: 100 / 58; }
+.ab-gif {
+  position: absolute; margin: 0;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+  transition: rotate 0.9s var(--ease-out), translate 1.2s var(--ease-out), opacity 1s var(--ease-out);
+}
+.ab-gif picture, .ab-gif img { display: block; width: 100%; height: auto; }
+.ab-gif--a { left: 2%;  top: 6%;  width: 21%; max-width: 360px; rotate: -2deg; }
+.ab-gif--b { left: 26%; top: 0;   width: 25%; max-width: 400px; rotate: 1.5deg; transition-delay: 0.08s; }
+.ab-gif--c { left: 55%; top: 24%; width: 19%; max-width: 360px; rotate: -1deg;  transition-delay: 0.16s; }
+.ab-gif--d { left: 78%; top: 6%;  width: 20%; max-width: 300px; rotate: 2deg;   transition-delay: 0.24s; }
+.js .ab-gif { opacity: 0; translate: 0 40px; }
+.js .ab-gifs.is-in .ab-gif { opacity: 1; translate: 0 0; }
+@media (hover: hover) { .ab-gif:hover { rotate: 0deg; z-index: 5; } }
+
+/* ------------------------------------------------------------------------ */
+/* 6 — Today                                                                 */
+/* ------------------------------------------------------------------------ */
+
+.ab-today {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: clamp(36px, 6vh, 72px);
+}
+.ab-today-title { grid-column: 1 / 13; font-size: clamp(38px, 5.6vw, 108px); }
+.ab-today-body { grid-column: 6 / 12; display: grid; gap: 1em; }
+.ab-today-body p { font-size: clamp(17px, 1.4vw, 22px); line-height: 1.5; letter-spacing: -0.01em; }
+.ab-today-body p + p { color: var(--muted); }
+
+/* ------------------------------------------------------------------------ */
+/* 7 — Final statement (L1)                                                  */
+/* ------------------------------------------------------------------------ */
+
+.ab-final {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  align-items: end;
+  padding-top: clamp(96px, 14vh, 170px);
+}
+.ab-final-text { grid-column: 1 / 9; position: relative; z-index: 2; display: grid; gap: clamp(24px, 4.4vh, 44px); padding-bottom: clamp(60px, 11vh, 130px); }
+.ab-final-a {
+  font-size: clamp(30px, 4vw, 76px);
+  font-weight: 600; line-height: 0.9; letter-spacing: -0.055em;
+  text-transform: uppercase; color: var(--muted);
+}
+.ab-final-b {
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(52px, 8.4vw, 164px); line-height: 0.84; letter-spacing: -0.035em;
+}
+.ab-final-c { font-size: clamp(16px, 1.3vw, 20px); color: var(--muted); }
+.ab-final-portrait { grid-column: 9 / 13; align-self: end; margin: 0; }
+/* Cropped to 765 × 880 so the source file's corner watermark never shows */
+.ab-final-portrait picture { display: block; aspect-ratio: 765 / 880; overflow: hidden; }
+.ab-final-portrait img { width: 100%; height: auto; display: block; filter: grayscale(1); }
+.js .ab-final-portrait { opacity: 0; translate: 0 40px; transition: opacity 1.4s var(--ease-out), translate 1.6s var(--ease-out); }
+.js .ab-final-portrait.is-in { opacity: 1; translate: 0 0; }
+
+/* ------------------------------------------------------------------------ */
+/* Tablet                                                                    */
+/* ------------------------------------------------------------------------ */
+
+@media (max-width: 1024px) {
+  .ab-hero-lead { grid-column: 1 / 6; }
+  .ab-cluster { grid-column: 6 / 13; }
+}
+@media (max-width: 900px) {
+  /* Stack: headline + intro, then the cluster at a comfortable width */
+  .ab-hero { row-gap: clamp(40px, 7vw, 64px); }
+  .ab-hero-lead { grid-column: 1 / 13; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); }
+  .ab-hero-title { grid-column: 1 / 13; }
+  .ab-hero-text { grid-column: 1 / 10; }
+  .ab-cluster { grid-column: 1 / 13; max-width: 640px; justify-self: end; aspect-ratio: 100 / 78; }
+
+  .ab-story-copy { margin-right: 0; }
+
+  .ab-see-title { grid-column: 1 / 13; position: static; margin-bottom: clamp(40px, 7vh, 64px); }
+  .ab-see-body { grid-column: 1 / 12; }
+
+  .ab-cs-b { grid-column: 1 / 10; }
+  .ab-cs-photo { grid-column: 10 / 13; }
+
+  .ab-gifs { aspect-ratio: 100 / 62; }
+
+  .ab-today-body { grid-column: 1 / 13; }
+
+  .ab-final-text { grid-column: 1 / 13; padding-bottom: 40px; }
+  .ab-final-portrait { grid-column: 5 / 13; }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Mobile — recomposed, not shrunk                                           */
+/* ------------------------------------------------------------------------ */
+
+@media (max-width: 760px) {
+  .ab-sec { padding-top: 80px; padding-bottom: 80px; }
+
+  .ab-hero { padding-top: calc(var(--nav-h) + 64px); row-gap: 40px; }
+  .ab-hero-title { font-size: clamp(48px, 15vw, 66px); }
+  .ab-hero-text { grid-column: 1 / 13; }
+  .ab-hero-id { font-size: clamp(22px, 6.4vw, 28px); }
+  .ab-hero-intro { font-size: 16px; }
+  /* A compact composition: the main portrait plus two fragments; the
+     thinking portrait is left to the desktop cluster */
+  .ab-cluster {
+    grid-column: 1 / 13; max-width: none;
+    aspect-ratio: auto;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: 10px;
+    padding-bottom: 8px;
+  }
+  .ab-c { position: relative; left: auto; top: auto; width: auto; }
+  .ab-c--main   { grid-column: 1 / 5; grid-row: 1 / 3; align-self: start; }
+  .ab-c--laptop { grid-column: 5 / 7; grid-row: 1; align-self: start; margin-top: 12%; rotate: 2deg; }
+  .ab-c--blazer { grid-column: 4 / 7; grid-row: 2; align-self: end; margin-bottom: -6%; rotate: -2deg; }
+  .ab-c--think  { display: none; }
+
+  .ab-story-title { font-size: clamp(34px, 10vw, 50px); }
+  .ab-steps { margin-top: 44px; }
+  .ab-steps li { font-size: clamp(22px, 6.8vw, 32px); padding-left: calc(var(--i, 0) * 6%); }
+  .ab-story-copy { margin: 44px 0 0; }
+  .ab-story-final { font-size: clamp(34px, 10.4vw, 52px); margin-top: 72px; }
+  .ab-story-final em { padding-left: 0; }
+
+  .ab-see-title { font-size: clamp(34px, 10.4vw, 50px); }
+  .ab-see-body { grid-column: 1 / 13; }
+  .ab-frags li { font-size: clamp(20px, 5.8vw, 26px); }
+  .ab-frags li:nth-child(even) { margin-left: 8%; }
+  .ab-see-close { font-size: clamp(22px, 6.4vw, 30px); }
+
+  .ab-cs { row-gap: 32px; }
+  .ab-cs-b { grid-column: 1 / 13; grid-row: 2; font-size: clamp(44px, 13vw, 66px); }
+  .ab-cs-photo { grid-column: 8 / 13; grid-row: 3; }
+
+  .ab-outside-title { font-size: clamp(34px, 10.4vw, 50px); }
+  /* The four clips become a compact, lightly staggered 2 × 2 */
+  .ab-gifs { aspect-ratio: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; align-items: start; }
+  .ab-gif { position: relative; left: auto; top: auto; width: auto; max-width: none; }
+  .ab-gif--b { margin-top: 32px; }
+  .ab-gif--c { margin-top: -16px; }
+  .ab-gif--d { margin-top: 16px; }
+
+  .ab-today-title { font-size: clamp(34px, 10.4vw, 50px); }
+
+  .ab-final-a { font-size: clamp(28px, 8.4vw, 42px); }
+  .ab-final-b { font-size: clamp(46px, 13.6vw, 70px); }
+  .ab-final-portrait { grid-column: 3 / 13; }
+}
+
+/* Quiet link from the present focus to the work itself */
+.ab-today-link { grid-column: 6 / 12; justify-self: start; margin-top: 8px; }
+@media (max-width: 1024px) { .ab-today-link { grid-column: 1 / 13; } }

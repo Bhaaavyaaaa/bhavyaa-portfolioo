@@ -1,0 +1,284 @@
+/* ==========================================================================
+   BHAVYA ARORA — Blossom Wellness case study
+   Loads after muviq.css and reuses its scaffold (.mq-sec, .mq-head,
+   .mq-split, .mq-rows, .mq-scope, .mq-facts, .mq-tags). Counseling runs on
+   paper, Learning on ink; the page theme flips at the business divide.
+   ========================================================================== */
+
+/* Accent: muted rose — darker on paper, lighter on ink (both ≥ 4.5:1) */
+body.cs-blossom { --accent: #8a3a5a; }
+body.cs-blossom[data-theme="dark"] { --accent: #e0a6bf; }
+
+.bw-num { grid-column: 1 / 13; color: var(--accent); transition: color 0.9s var(--ease); margin-bottom: calc(clamp(28px, 5vh, 56px) * -0.6); }
+.bw-accent { color: var(--accent); transition: color 0.9s var(--ease); }
+
+.bw-copy { display: grid; gap: 1.1em; max-width: 58ch; }
+.bw-copy p { font-size: clamp(17px, 1.35vw, 21px); line-height: 1.55; letter-spacing: -0.01em; }
+
+/* Shared reveal */
+.js .bw-cell, .js .bw-stage, .js .bw-panel, .js .bw-path {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out);
+}
+.js .is-in.bw-cell, .js .is-in.bw-stage, .js .is-in.bw-panel, .js .is-in.bw-path { opacity: 1; transform: none; }
+
+/* ------------------------------------------------------------------------ */
+/* Hero                                                                      */
+/* ------------------------------------------------------------------------ */
+
+.bw-hero-copy {
+  display: grid; gap: 0.9em;
+  max-width: 46ch;
+  margin-left: auto;
+  font-size: clamp(18px, 1.5vw, 24px); line-height: 1.45; letter-spacing: -0.015em;
+}
+.bw-hero { grid-template-rows: auto 1fr auto auto; }
+.bw-hero-copy p:last-child { color: var(--muted); }
+
+/* ------------------------------------------------------------------------ */
+/* Intro — two starting points                                               */
+/* ------------------------------------------------------------------------ */
+
+.bw-paths {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.bw-path {
+  display: grid; gap: 18px; align-content: start;
+  padding: clamp(22px, 2.8vw, 40px) var(--gap) clamp(28px, 3.6vw, 48px) 0;
+}
+.bw-path + .bw-path { padding-left: var(--gap); border-left: 1px solid var(--line); transition-delay: 0.1s; }
+.bw-path-top { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); }
+.bw-path-name {
+  font-size: clamp(34px, 4.4vw, 84px);
+  font-weight: 600; line-height: 0.9; letter-spacing: -0.05em; text-transform: uppercase;
+}
+.bw-path > p { font-size: clamp(16px, 1.3vw, 20px); line-height: 1.5; max-width: 44ch; }
+
+/* ------------------------------------------------------------------------ */
+/* Business openers                                                          */
+/* ------------------------------------------------------------------------ */
+
+.bw-biz {
+  position: relative;
+  display: grid; align-content: end;
+  min-height: 100svh;
+  padding-top: clamp(120px, 20vh, 220px);
+  padding-bottom: clamp(80px, 12vh, 140px);
+  overflow: hidden;
+}
+.bw-biz-mark {
+  position: absolute; right: var(--pad); top: clamp(80px, 12vh, 140px);
+  font-size: clamp(160px, 30vw, 560px);
+  font-weight: 600; line-height: 0.8; letter-spacing: -0.07em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--stroke);
+  pointer-events: none;
+  user-select: none;
+}
+.bw-biz-eyebrow {
+  display: flex; flex-wrap: wrap; gap: 8px 22px;
+  padding-bottom: 18px; margin-bottom: clamp(28px, 5vh, 56px);
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+.bw-biz-eyebrow .bw-accent { color: var(--accent); }
+.bw-biz-title {
+  position: relative;
+  font-size: clamp(50px, 10.4vw, 196px);
+  font-weight: 600; line-height: 0.86; letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+.bw-biz-title em { text-transform: none; letter-spacing: -0.03em; }
+.bw-biz-sub {
+  position: relative;
+  margin-top: clamp(24px, 4vh, 44px);
+  max-width: 24ch;
+  font-size: clamp(24px, 2.6vw, 44px);
+  font-weight: 500; line-height: 1.08; letter-spacing: -0.035em;
+}
+.bw-biz-shift { display: inline-flex; gap: 0.6em; align-items: baseline; }
+.bw-biz-shift s { text-decoration-color: var(--muted); }
+
+.bw-biz + .mq-sec { padding-top: 0; }
+
+/* ------------------------------------------------------------------------ */
+/* Block grids (strategy, email/referral, channels, work across both)         */
+/* ------------------------------------------------------------------------ */
+
+.bw-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.bw-grid--2 { --cols: 2; }
+.bw-grid--3 { --cols: 3; }
+.bw-cell {
+  display: grid; gap: 16px; align-content: start;
+  min-height: clamp(160px, 22vh, 240px);
+  padding: clamp(20px, 2.6vw, 34px) var(--gap) clamp(26px, 3.4vw, 44px);
+  border-left: 1px solid var(--line);
+}
+.bw-cell:nth-child(4n + 2) { transition-delay: 0.06s; }
+.bw-cell:nth-child(4n + 3) { transition-delay: 0.12s; }
+.bw-cell:nth-child(4n + 4) { transition-delay: 0.18s; }
+.bw-cell .mono { color: var(--muted); }
+.bw-cell h3 {
+  font-size: clamp(24px, 2.4vw, 44px);
+  font-weight: 600; line-height: 0.92; letter-spacing: -0.045em;
+  text-transform: uppercase;
+  transition: color 0.5s var(--ease-out);
+}
+.bw-grid--2 .bw-cell h3 { font-size: clamp(30px, 4vw, 72px); }
+.bw-cell > p { font-size: clamp(16px, 1.2vw, 19px); line-height: 1.45; max-width: 32ch; }
+@media (hover: hover) { .bw-cell:hover h3 { color: var(--accent); } }
+
+/* First cell of each row sits on the grid edge */
+.bw-grid .bw-cell:nth-child(4n + 1) { padding-left: 0; border-left: 0; }
+.bw-grid--2 .bw-cell:nth-child(odd), .bw-grid--3 .bw-cell:nth-child(3n + 1) { padding-left: 0; border-left: 0; }
+.bw-grid--2 .bw-cell:nth-child(even) { padding-left: var(--gap); border-left: 1px solid var(--line); }
+.bw-grid--3 .bw-cell:nth-child(n + 4) { border-top: 1px solid var(--line); }
+.bw-grid--3 .bw-cell:nth-child(3n + 2), .bw-grid--3 .bw-cell:nth-child(3n + 3) { padding-left: var(--gap); border-left: 1px solid var(--line); }
+
+/* ------------------------------------------------------------------------ */
+/* Statement (counseling closing)                                            */
+/* ------------------------------------------------------------------------ */
+
+.bw-statement { display: grid; gap: clamp(20px, 3vh, 32px); padding-top: clamp(20px, 3vh, 32px); border-top: 1px solid var(--line); }
+.bw-statement-lead {
+  font-size: clamp(40px, 6.4vw, 120px);
+  font-weight: 600; line-height: 0.9; letter-spacing: -0.055em; text-transform: uppercase;
+}
+.bw-statement-follow {
+  margin-left: auto; max-width: 26ch;
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(24px, 2.6vw, 46px); line-height: 1.1; letter-spacing: -0.01em;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Launch stages                                                             */
+/* ------------------------------------------------------------------------ */
+
+.bw-stages {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.bw-stage {
+  position: relative;
+  display: grid; gap: 16px; align-content: start;
+  padding: clamp(22px, 2.8vw, 40px) var(--gap) clamp(28px, 3.6vw, 48px) 0;
+}
+.bw-stage + .bw-stage { padding-left: var(--gap); border-left: 1px solid var(--line); }
+.bw-stage:nth-child(2) { transition-delay: 0.1s; }
+.bw-stage:nth-child(3) { transition-delay: 0.2s; }
+.bw-stage:not(:last-child)::after {
+  content: "→";
+  position: absolute; right: var(--gap); top: clamp(22px, 2.8vw, 40px);
+  font-size: clamp(22px, 2vw, 34px); font-weight: 300; line-height: 1;
+  color: var(--accent);
+}
+.bw-stage .mono { color: var(--muted); }
+.bw-stage h3 {
+  font-size: clamp(30px, 3.8vw, 72px);
+  font-weight: 600; line-height: 0.9; letter-spacing: -0.05em; text-transform: uppercase;
+}
+.bw-stage p:last-child { font-size: clamp(16px, 1.3vw, 20px); line-height: 1.4; }
+
+/* ------------------------------------------------------------------------ */
+/* Same client, different problem — light panel vs dark panel               */
+/* ------------------------------------------------------------------------ */
+
+.bw-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0 calc(var(--pad) * -1);
+}
+.bw-panel {
+  display: grid; gap: clamp(22px, 3.4vh, 36px); align-content: start;
+  padding: clamp(32px, 5vw, 72px) var(--pad) clamp(44px, 7vw, 96px);
+}
+.bw-panel--light { background: var(--paper, #eeece7); color: var(--ink, #0c0c0c); --p-muted: rgba(12, 12, 12, 0.64); --p-line: rgba(12, 12, 12, 0.16); --p-accent: #8a3a5a; }
+.bw-panel--dark { background: var(--ink, #0c0c0c); color: var(--paper, #eeece7); --p-muted: rgba(238, 236, 231, 0.6); --p-line: rgba(238, 236, 231, 0.16); --p-accent: #e0a6bf; transition-delay: 0.12s; }
+.bw-panel-top { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--p-line); color: var(--p-muted); }
+.bw-panel-stage {
+  font-size: clamp(48px, 7.6vw, 144px);
+  font-weight: 600; line-height: 0.86; letter-spacing: -0.06em; text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.bw-panel-stage em { display: block; font-size: 0.34em; letter-spacing: -0.02em; text-transform: none; color: var(--p-accent); margin-top: 0.3em; }
+.bw-panel-lede { font-size: clamp(20px, 1.9vw, 32px); line-height: 1.15; letter-spacing: -0.025em; max-width: 22ch; }
+.bw-panel-label { color: var(--p-muted); }
+.bw-panel ul { border-bottom: 1px solid var(--p-line); }
+.bw-panel li {
+  position: relative;
+  padding: 14px 0 14px 30px;
+  border-top: 1px solid var(--p-line);
+  font-size: clamp(17px, 1.5vw, 24px); line-height: 1.25; letter-spacing: -0.02em;
+}
+.bw-panel li::before {
+  content: ""; position: absolute; left: 0; top: calc(14px + 0.62em);
+  width: 16px; height: 1px; background: var(--p-accent);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Evidence                                                                  */
+/* ------------------------------------------------------------------------ */
+
+.bw-evidence .bw-cell { min-height: 0; }
+.bw-ev-shots { display: grid; gap: clamp(24px, 4vh, 40px); margin-top: 8px; width: 100%; }
+.bw-ev-shots:empty { display: none; }
+
+/* ------------------------------------------------------------------------ */
+/* Closing                                                                   */
+/* ------------------------------------------------------------------------ */
+
+.bw-close .bw-cell h3 { font-size: clamp(22px, 2vw, 34px); }
+
+/* ------------------------------------------------------------------------ */
+/* Previous / next                                                           */
+/* ------------------------------------------------------------------------ */
+
+.bw-pn .bar-link + .bar-link { margin-top: 0; border-top: 0; }
+
+/* ------------------------------------------------------------------------ */
+/* Responsive                                                                */
+/* ------------------------------------------------------------------------ */
+
+@media (max-width: 1024px) {
+  .bw-grid { --cols: 2; }
+  .bw-grid--3 { --cols: 2; }
+  /* Two columns: every cell reset, then odd cells sit on the grid edge */
+  .bw-grid .bw-cell:nth-child(n) { padding-left: var(--gap); border-left: 1px solid var(--line); }
+  .bw-grid .bw-cell:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .bw-grid .bw-cell:nth-child(n + 3) { border-top: 1px solid var(--line); }
+
+  .bw-compare { grid-template-columns: minmax(0, 1fr); }
+  .bw-panel-stage { font-size: clamp(48px, 11vw, 120px); }
+}
+
+@media (max-width: 760px) {
+  .bw-num { margin-bottom: -8px; }
+  .bw-hero-copy { margin-left: 0; }
+
+  .bw-paths, .bw-stages { grid-template-columns: minmax(0, 1fr); }
+  .bw-path, .bw-stage { padding: 20px 0 26px; }
+  .bw-path + .bw-path, .bw-stage + .bw-stage { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+  .bw-stage:not(:last-child)::after { content: "↓"; right: 0; }
+
+  .bw-biz { min-height: 88svh; }
+  .bw-biz-mark { font-size: clamp(150px, 52vw, 240px); top: 96px; }
+  .bw-biz-title { font-size: clamp(40px, 12.4vw, 64px); }
+  .bw-biz-sub { font-size: clamp(21px, 6vw, 26px); }
+
+  .bw-grid, .bw-grid--2, .bw-grid--3 { --cols: 1; }
+  .bw-grid .bw-cell:nth-child(n) { min-height: 0; padding: 18px 0 24px; border-left: 0; }
+  .bw-grid .bw-cell + .bw-cell { border-top: 1px solid var(--line); }
+
+  .bw-statement-follow { margin-left: 0; }
+  .bw-panel li { padding-left: 26px; }
+}

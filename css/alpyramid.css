@@ -1,0 +1,293 @@
+/* ==========================================================================
+   BHAVYA ARORA — ALPYRAMID case study
+   Loads after muviq.css and reuses its scaffold (.mq-sec, .mq-head,
+   .mq-split, .mq-scope, .mq-shot / .mq-zoom / .mq-missing, lightbox). This
+   layer adds the cobalt accent, a more image-led layout and the journey /
+   flow diagrams.
+   ========================================================================== */
+
+/* Accent: cobalt — darker on paper, lighter on ink (both ≥ 4.5:1) */
+body.cs-alpyramid { --accent: #2c4bb0; }
+body.cs-alpyramid[data-theme="dark"] { --accent: #a3b4ff; }
+
+.al-num { grid-column: 1 / 13; color: var(--accent); transition: color 0.9s var(--ease); margin-bottom: calc(clamp(28px, 5vh, 56px) * -0.6); }
+
+.al-copy { display: grid; gap: 1.1em; max-width: 58ch; }
+.al-copy p { font-size: clamp(17px, 1.35vw, 21px); line-height: 1.55; letter-spacing: -0.01em; }
+
+/* Shared reveal */
+.js .al-cell, .js .al-step, .js .al-map li {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out);
+}
+.js .is-in.al-cell, .js .is-in.al-step, .js .al-map li.is-in { opacity: 1; transform: none; }
+
+/* Screenshots here carry more weight: no inner padding on the frame */
+.cs-alpyramid .mq-zoom { padding: 0; overflow: hidden; }
+@media (hover: hover) { .cs-alpyramid .mq-zoom:hover img { transform: scale(1.015); } }
+.al-shot figcaption { display: flex; justify-content: space-between; gap: 12px; }
+
+/* ------------------------------------------------------------------------ */
+/* Hero                                                                      */
+/* ------------------------------------------------------------------------ */
+
+.al-hero { grid-template-rows: auto 1fr auto auto; }
+.al-hero-copy {
+  max-width: 46ch; margin-left: auto;
+  font-size: clamp(18px, 1.5vw, 24px); line-height: 1.45; letter-spacing: -0.015em;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Intro — the six workstreams as a map of the page                          */
+/* ------------------------------------------------------------------------ */
+
+.al-map {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-top: clamp(56px, 10vh, 110px);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.al-map li + li { border-left: 1px solid var(--line); }
+.al-map li:nth-child(2) { transition-delay: 0.05s; }
+.al-map li:nth-child(3) { transition-delay: 0.1s; }
+.al-map li:nth-child(4) { transition-delay: 0.15s; }
+.al-map li:nth-child(5) { transition-delay: 0.2s; }
+.al-map li:nth-child(6) { transition-delay: 0.25s; }
+.al-map a {
+  display: grid; gap: 28px; align-content: space-between;
+  height: 100%;
+  padding: 18px 14px 22px;
+  transition: background-color 0.5s var(--ease-out);
+}
+.al-map li:first-child a { padding-left: 0; }
+.al-map .mono { color: var(--muted); }
+.al-map strong {
+  font-size: clamp(18px, 1.6vw, 28px);
+  font-weight: 600; line-height: 0.95; letter-spacing: -0.035em; text-transform: uppercase;
+  transition: color 0.5s var(--ease-out);
+}
+@media (hover: hover) { .al-map a:hover strong { color: var(--accent); } }
+
+/* ------------------------------------------------------------------------ */
+/* Module grids                                                              */
+/* ------------------------------------------------------------------------ */
+
+.al-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.al-grid--3 { --cols: 3; }
+.al-cell {
+  display: grid; gap: 14px; align-content: start;
+  padding: clamp(20px, 2.4vw, 32px) var(--gap) clamp(24px, 3vw, 40px);
+}
+.al-cell .mono { color: var(--muted); }
+.al-cell h3 {
+  font-size: clamp(22px, 2.2vw, 40px);
+  font-weight: 600; line-height: 0.92; letter-spacing: -0.045em; text-transform: uppercase;
+  transition: color 0.5s var(--ease-out);
+}
+.al-cell > p { font-size: clamp(16px, 1.2vw, 19px); line-height: 1.45; max-width: 30ch; }
+@media (hover: hover) { .al-cell:hover h3 { color: var(--accent); } }
+
+/* Column rules: cells in a row after the first get a left rule; rows after the first get a top rule */
+.al-grid .al-cell:nth-child(n) { padding-left: var(--gap); border-left: 1px solid var(--line); }
+.al-grid .al-cell:nth-child(4n + 1) { padding-left: 0; border-left: 0; }
+.al-grid--3 .al-cell:nth-child(n) { padding-left: var(--gap); border-left: 1px solid var(--line); }
+.al-grid--3 .al-cell:nth-child(3n + 1) { padding-left: 0; border-left: 0; }
+.al-grid--3 .al-cell:nth-child(n + 4) { border-top: 1px solid var(--line); }
+.al-cell:nth-child(2) { transition-delay: 0.06s; }
+.al-cell:nth-child(3) { transition-delay: 0.12s; }
+.al-cell:nth-child(4) { transition-delay: 0.18s; }
+.al-cell:nth-child(5) { transition-delay: 0.24s; }
+.al-cell:nth-child(6) { transition-delay: 0.3s; }
+
+.al-gap { margin-top: clamp(64px, 11vh, 130px); }
+.al-shot--templates { max-width: 907px; }
+
+/* ------------------------------------------------------------------------ */
+/* 01 — store gallery: one large homepage, two supporting pages              */
+/* ------------------------------------------------------------------------ */
+
+.al-gallery {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(40px, 7vh, 80px) var(--gap);
+  margin-bottom: clamp(64px, 11vh, 130px);
+}
+.al-gallery > .al-shot { grid-column: span 6; }
+.al-gallery > .al-shot--lead { grid-column: 1 / 13; }
+.al-gallery > .al-shot:nth-child(2) { grid-column: 1 / 7; }
+.al-gallery > .al-shot:nth-child(3) { grid-column: 8 / 13; margin-top: clamp(40px, 10vh, 120px); transition-delay: 0.1s; }
+
+/* ------------------------------------------------------------------------ */
+/* Feature: screenshot beside modules (SEO, WhatsApp)                        */
+/* ------------------------------------------------------------------------ */
+
+.al-feature {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: 48px;
+  align-items: start;
+}
+.al-feature-media { grid-column: 1 / 8; }
+.al-feature-body { grid-column: 9 / 13; }
+.al-feature--portrait .al-feature-media { grid-column: 8 / 12; grid-row: 1; }
+.al-feature--portrait .al-feature-body { grid-column: 1 / 7; grid-row: 1; }
+
+/* Stacked module list inside a feature */
+.al-list { border-bottom: 1px solid var(--line); }
+.al-list li { display: grid; gap: 10px; padding: clamp(18px, 2.2vw, 28px) 0; border-top: 1px solid var(--line); }
+.al-list h3 {
+  font-size: clamp(26px, 3vw, 54px);
+  font-weight: 600; line-height: 0.92; letter-spacing: -0.05em; text-transform: uppercase;
+}
+.al-list p { font-size: clamp(16px, 1.25vw, 20px); line-height: 1.45; max-width: 36ch; }
+
+/* ------------------------------------------------------------------------ */
+/* 03 — two product pages, offset                                            */
+/* ------------------------------------------------------------------------ */
+
+.al-duo {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: 48px;
+  margin-top: clamp(64px, 11vh, 130px);
+}
+.al-duo > .al-shot:first-child { grid-column: 1 / 7; }
+.al-duo > .al-shot:last-child { grid-column: 7 / 13; margin-top: clamp(60px, 14vh, 180px); transition-delay: 0.1s; }
+
+/* ------------------------------------------------------------------------ */
+/* Journey + flow diagrams                                                   */
+/* ------------------------------------------------------------------------ */
+
+.al-journey {
+  display: grid;
+  grid-template-columns: repeat(var(--steps, 5), minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: clamp(64px, 11vh, 130px);
+}
+.al-journey--4 { --steps: 4; margin-bottom: clamp(48px, 8vh, 96px); }
+.al-step {
+  position: relative;
+  display: grid; gap: 22px; align-content: space-between;
+  min-height: clamp(130px, 18vh, 200px);
+  padding: 18px var(--gap) 22px;
+}
+.al-step:first-child { padding-left: 0; }
+.al-step + .al-step { border-left: 1px solid var(--line); }
+.al-step:nth-child(2) { transition-delay: 0.06s; }
+.al-step:nth-child(3) { transition-delay: 0.12s; }
+.al-step:nth-child(4) { transition-delay: 0.18s; }
+.al-step:nth-child(5) { transition-delay: 0.24s; }
+.al-step:not(:last-child)::after {
+  content: "→";
+  position: absolute; right: var(--gap); top: 16px;
+  font-size: clamp(18px, 1.6vw, 26px); font-weight: 300; line-height: 1;
+  color: var(--accent);
+}
+.al-step .mono { color: var(--muted); }
+.al-step strong {
+  font-size: clamp(22px, 2.3vw, 42px);
+  font-weight: 600; line-height: 0.92; letter-spacing: -0.045em; text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------------ */
+/* 06 — email flow (wide) + template (tall)                                  */
+/* ------------------------------------------------------------------------ */
+
+.al-email {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: 48px;
+  align-items: start;
+}
+.al-email > .al-shot:first-child { grid-column: 1 / 8; }
+.al-email > .al-shot:last-child { grid-column: 9 / 13; transition-delay: 0.1s; }
+
+/* ------------------------------------------------------------------------ */
+/* The foundation is ready                                                   */
+/* ------------------------------------------------------------------------ */
+
+.al-statement { display: grid; gap: clamp(20px, 3vh, 32px); padding-top: clamp(20px, 3vh, 32px); border-top: 1px solid var(--line); }
+.al-statement-lead {
+  font-size: clamp(40px, 6.4vw, 120px);
+  font-weight: 600; line-height: 0.9; letter-spacing: -0.055em; text-transform: uppercase;
+}
+.al-statement-body { display: grid; gap: 0.8em; margin-left: auto; max-width: 30ch; }
+.al-statement-body p {
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(22px, 2.3vw, 40px); line-height: 1.12; letter-spacing: -0.01em;
+}
+.al-statement-body p:first-child { color: var(--muted); }
+
+/* Previous / next */
+.al-pn .bar-link + .bar-link { margin-top: 0; border-top: 0; }
+
+/* ------------------------------------------------------------------------ */
+/* Responsive                                                                */
+/* ------------------------------------------------------------------------ */
+
+@media (max-width: 1024px) {
+  .al-map { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .al-map li:nth-child(4) { border-left: 0; }
+  .al-map li:nth-child(4) a { padding-left: 0; }
+  .al-map li:nth-child(n + 4) { border-top: 1px solid var(--line); }
+
+  .al-grid, .al-grid--3 { --cols: 2; }
+  .al-grid .al-cell:nth-child(n), .al-grid--3 .al-cell:nth-child(n) { padding-left: var(--gap); border-left: 1px solid var(--line); border-top: 0; }
+  .al-grid .al-cell:nth-child(odd), .al-grid--3 .al-cell:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .al-grid .al-cell:nth-child(n + 3), .al-grid--3 .al-cell:nth-child(n + 3) { border-top: 1px solid var(--line); }
+
+  .al-feature-media, .al-feature-body { grid-column: 1 / 13; }
+  .al-feature--portrait .al-feature-media { grid-column: 1 / 7; grid-row: auto; }
+  .al-feature--portrait .al-feature-body { grid-column: 1 / 13; grid-row: auto; }
+
+  .al-journey { --steps: 3; }
+  .al-journey--4 { --steps: 2; }
+  .al-journey .al-step:nth-child(n) { padding-left: var(--gap); border-left: 1px solid var(--line); }
+  .al-journey:not(.al-journey--4) .al-step:nth-child(3n + 1),
+  .al-journey--4 .al-step:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .al-journey:not(.al-journey--4) .al-step:nth-child(n + 4),
+  .al-journey--4 .al-step:nth-child(n + 3) { border-top: 1px solid var(--line); }
+
+  .al-email > .al-shot:first-child { grid-column: 1 / 13; }
+  .al-email > .al-shot:last-child { grid-column: 1 / 7; }
+}
+
+@media (max-width: 760px) {
+  .al-num { margin-bottom: -8px; }
+  .al-hero-copy { margin-left: 0; }
+
+  .al-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .al-map li:nth-child(n) { border-left: 1px solid var(--line); border-top: 0; }
+  .al-map li:nth-child(n) a { padding-left: 14px; }
+  .al-map li:nth-child(odd) { border-left: 0; }
+  .al-map li:nth-child(odd) a { padding-left: 0; }
+  .al-map li:nth-child(n + 3) { border-top: 1px solid var(--line); }
+
+  .al-grid, .al-grid--3 { --cols: 1; }
+  .al-grid .al-cell:nth-child(n), .al-grid--3 .al-cell:nth-child(n) { padding: 18px 0 22px; border-left: 0; }
+  .al-grid .al-cell:nth-child(n + 2), .al-grid--3 .al-cell:nth-child(n + 2) { border-top: 1px solid var(--line); }
+
+  .al-gallery > .al-shot:nth-child(n) { grid-column: 1 / 13; margin-top: 0; }
+  .al-duo > .al-shot:first-child, .al-duo > .al-shot:last-child { grid-column: 1 / 13; margin-top: 0; }
+  .al-feature--portrait .al-feature-media { grid-column: 2 / 12; }
+  .al-email > .al-shot:last-child { grid-column: 2 / 12; }
+
+  /* Journeys read top to bottom on phones */
+  .al-journey, .al-journey--4 { --steps: 1; }
+  .al-journey .al-step:nth-child(n) { min-height: 0; padding: 16px 0; border-left: 0; }
+  .al-journey .al-step:nth-child(n + 2) { border-top: 1px solid var(--line); }
+  .al-step { grid-auto-flow: column; justify-content: start; align-items: baseline; gap: 18px; }
+  .al-step:not(:last-child)::after { content: "↓"; right: 0; top: 50%; transform: translateY(-50%); }
+
+  .al-statement-body { margin-left: 0; }
+}
